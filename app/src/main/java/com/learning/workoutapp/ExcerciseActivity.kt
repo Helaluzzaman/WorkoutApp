@@ -27,6 +27,7 @@ class ExcerciseActivity : AppCompatActivity() {
     lateinit var actionbar: Toolbar
     lateinit var progressBar: ProgressBar
     lateinit var progressText : TextView
+    lateinit var upcommingExercise: TextView
 
     lateinit var exerciseView: LinearLayout
     lateinit var iv_exerciseImage: ImageView
@@ -54,8 +55,8 @@ class ExcerciseActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.pb_time_progress)
         progressText = findViewById(R.id.tv_timer)
-        setRestTimerView()
         restView = findViewById(R.id.ll_restView)
+        upcommingExercise = findViewById(R.id.tv_upcomming_exercise_name)
 
 
         exerciseView = findViewById(R.id.ll_exerciseView)
@@ -65,6 +66,8 @@ class ExcerciseActivity : AppCompatActivity() {
         tv_exerciseName = findViewById(R.id.tv_exercise_name)
         // exercise List:
         exercises = Exercises.getDefaultExerciseList()
+
+        setRestTimerView()
     }
     private fun setRestTimer(){
 //        progressBar.progress = restProgress
@@ -80,32 +83,33 @@ class ExcerciseActivity : AppCompatActivity() {
         }.start()
     }
     private fun setRestTimerView(){
+
         if(restDownTimer != null){
             restDownTimer!!.cancel()
+            restProgress = 0
         }
         setRestTimer()
-    }
-    private fun setAgainRestTimerView(){
-        restProgress = 0
-        exerciseProgress= 0
+        upcommingExercise.text = exercises!![currentExercisePosition+1].name
         restView.visibility = View.VISIBLE
         exerciseView.visibility = View.GONE
-        if(restDownTimer != null){
-            restDownTimer!!.cancel()
-        }
-        setRestTimer()
-    }
 
+    }
     private fun setExerciseTimer(){
         exerciseProgressBar.progress = exerciseProgress
         exerciseDownTimer = object : CountDownTimer(30000, 1000){
             override fun onFinish() {
-                setAgainRestTimerView()
+                if(currentExercisePosition < 2 ){
+                    setRestTimerView()
+                }else{
+                    Toast.makeText(this@ExcerciseActivity, "Congratulations, you finished" +
+                            "your 7 min workout.", Toast.LENGTH_SHORT).show()
+                    //todo
+                }
             }
 
             override fun onTick(millisUntilFinished: Long) {
                 exerciseProgress++
-                exerciseProgressBar.progress = (30- exerciseProgress)
+                exerciseProgressBar.progress = (30 - exerciseProgress)
                 exerciseProgressText.text = (30- exerciseProgress).toString()
             }
         }
@@ -118,22 +122,19 @@ class ExcerciseActivity : AppCompatActivity() {
         exerciseView.visibility = View.VISIBLE
         if(exerciseDownTimer!= null){
             exerciseDownTimer!!.cancel()
+            exerciseProgress= 0
         }
+
         setExerciseTimer()
     }
     @SuppressLint("SetTextI18n")
     private fun myExerciseUiSetup(){
         currentExercisePosition++
-        if(currentExercisePosition < exercises!!.size ){
-            val image = exercises!![currentExercisePosition].image
-            val exerciseName = exercises!![currentExercisePosition].name
-            val exerciseId = exercises!![currentExercisePosition].id
-            iv_exerciseImage.setImageResource(image)
-            tv_exerciseName.text = "$exerciseId. $exerciseName"
-        }else{
-            Toast.makeText(this, "finished", Toast.LENGTH_SHORT).show()
-            currentExercisePosition = -1
-        }
+        val image = exercises!![currentExercisePosition].image
+        val exerciseName = exercises!![currentExercisePosition].name
+        val exerciseId = exercises!![currentExercisePosition].id
+        iv_exerciseImage.setImageResource(image)
+        tv_exerciseName.text = "$exerciseId. $exerciseName"
     }
 
     override fun onBackPressed() {
