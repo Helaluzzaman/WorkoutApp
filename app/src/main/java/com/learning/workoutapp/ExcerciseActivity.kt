@@ -2,10 +2,13 @@ package com.learning.workoutapp
 
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +16,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import org.w3c.dom.Text
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,7 +41,8 @@ class ExcerciseActivity : AppCompatActivity() {
 
     private var exercises : ArrayList<ExerciseModel>? = null
     private var currentExercisePosition = -1
-
+    private var tts : TextToSpeech? = null
+    private var player: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +63,7 @@ class ExcerciseActivity : AppCompatActivity() {
         restView = findViewById(R.id.ll_restView)
         upcommingExercise = findViewById(R.id.tv_upcomming_exercise_name)
 
+        initializeTts()
 
         exerciseView = findViewById(R.id.ll_exerciseView)
         exerciseProgressBar = findViewById(R.id.pb_exercise_time_progress)
@@ -82,6 +88,26 @@ class ExcerciseActivity : AppCompatActivity() {
             }
         }.start()
     }
+    private fun createPlayer(){
+        try{
+            player = MediaPlayer.create(this, R.raw.press_start)
+            player!!.isLooping = false
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+    private fun initializeTts(){
+        tts = TextToSpeech(this) {
+            if(it == TextToSpeech.SUCCESS){
+                val result= tts!!.setLanguage(Locale.US)
+                if(result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA){
+                    Log.e("tts", "Language does not support" )
+                }
+            }else{
+                Log.e("tts", "tts initialization failed")
+            }
+        }
+    }
     private fun setRestTimerView(){
 
         if(restDownTimer != null){
@@ -92,13 +118,14 @@ class ExcerciseActivity : AppCompatActivity() {
         upcommingExercise.text = exercises!![currentExercisePosition+1].name
         restView.visibility = View.VISIBLE
         exerciseView.visibility = View.GONE
-
+        createPlayer()
+        player!!.start()
     }
     private fun setExerciseTimer(){
         exerciseProgressBar.progress = exerciseProgress
-        exerciseDownTimer = object : CountDownTimer(30000, 1000){
+        exerciseDownTimer = object : CountDownTimer(31000, 1000){
             override fun onFinish() {
-                if(currentExercisePosition < 2 ){
+                if(currentExercisePosition < 1 ){        // Todo -> exercises!!.size-1
                     setRestTimerView()
                 }else{
                     Toast.makeText(this@ExcerciseActivity, "Congratulations, you finished" +
@@ -124,9 +151,12 @@ class ExcerciseActivity : AppCompatActivity() {
             exerciseDownTimer!!.cancel()
             exerciseProgress= 0
         }
-
         setExerciseTimer()
     }
+    private fun speakOut(text: String){
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+
     @SuppressLint("SetTextI18n")
     private fun myExerciseUiSetup(){
         currentExercisePosition++
@@ -135,6 +165,7 @@ class ExcerciseActivity : AppCompatActivity() {
         val exerciseId = exercises!![currentExercisePosition].id
         iv_exerciseImage.setImageResource(image)
         tv_exerciseName.text = "$exerciseId. $exerciseName"
+        speakOut(exerciseName)
     }
 
     override fun onBackPressed() {
@@ -150,6 +181,14 @@ class ExcerciseActivity : AppCompatActivity() {
         }
         if(exerciseDownTimer != null){
             exerciseDownTimer!!.cancel()
+        }
+        if(tts != null){
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        if(player != null){
+            player!!.stop()
+            player!!.release()
         }
         super.onDestroy()
     }
