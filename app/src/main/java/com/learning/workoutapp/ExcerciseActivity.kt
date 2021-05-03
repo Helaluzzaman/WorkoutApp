@@ -60,6 +60,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         actionbar.setNavigationOnClickListener {
             onBackPressed()
         }
+        tts = TextToSpeech(this, this)
 
         progressBar = findViewById(R.id.pb_time_progress)
         progressText = findViewById(R.id.tv_timer)
