@@ -14,13 +14,15 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import org.w3c.dom.Text
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ExcerciseActivity : AppCompatActivity() {
+class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var restDownTimer : CountDownTimer? = null
     private var restProgress = 0
 
@@ -32,6 +34,7 @@ class ExcerciseActivity : AppCompatActivity() {
     lateinit var progressBar: ProgressBar
     lateinit var progressText : TextView
     lateinit var upcommingExercise: TextView
+    lateinit var rvStatusContainer: RecyclerView
 
     lateinit var exerciseView: LinearLayout
     lateinit var iv_exerciseImage: ImageView
@@ -63,8 +66,6 @@ class ExcerciseActivity : AppCompatActivity() {
         restView = findViewById(R.id.ll_restView)
         upcommingExercise = findViewById(R.id.tv_upcomming_exercise_name)
 
-        initializeTts()
-
         exerciseView = findViewById(R.id.ll_exerciseView)
         exerciseProgressBar = findViewById(R.id.pb_exercise_time_progress)
         exerciseProgressText = findViewById(R.id.tv_exercise_timer)
@@ -72,8 +73,13 @@ class ExcerciseActivity : AppCompatActivity() {
         tv_exerciseName = findViewById(R.id.tv_exercise_name)
         // exercise List:
         exercises = Exercises.getDefaultExerciseList()
-
         setRestTimerView()
+        setExerciseStatusRecyclerView()
+    }
+    private fun setExerciseStatusRecyclerView(){
+        rvStatusContainer = findViewById(R.id.rv_exercise_status_container)
+        rvStatusContainer.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        rvStatusContainer.adapter = exercises?.let { ExerciseStatusAdapter(this, it) }
     }
     private fun setRestTimer(){
 //        progressBar.progress = restProgress
@@ -96,20 +102,7 @@ class ExcerciseActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-    private fun initializeTts(){
-        tts = TextToSpeech(this) {
-            if(it == TextToSpeech.SUCCESS){
-                val result= tts!!.setLanguage(Locale.US)
-                if(result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA){
-                    Log.e("tts", "Language does not support" )
-                }
-            }else{
-                Log.e("tts", "tts initialization failed")
-            }
-        }
-    }
     private fun setRestTimerView(){
-
         if(restDownTimer != null){
             restDownTimer!!.cancel()
             restProgress = 0
@@ -191,5 +184,16 @@ class ExcerciseActivity : AppCompatActivity() {
             player!!.release()
         }
         super.onDestroy()
+    }
+
+    override fun onInit(status: Int) {
+        if(status == TextToSpeech.SUCCESS){
+            val result= tts!!.setLanguage(Locale.US)
+            if(result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA){
+                Log.e("tts", "Language does not support" )
+            }
+        }else{
+            Log.e("tts", "tts initialization failed")
+        }
     }
 }

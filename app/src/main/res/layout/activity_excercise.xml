@@ -16,10 +16,11 @@
     <LinearLayout
         android:id="@+id/ll_restView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_below="@+id/tb_actionBar"
+        android:layout_above="@id/rv_exercise_status_container"
         android:visibility="visible"
         tools:visibility="visible"
         >
@@ -89,10 +90,11 @@
     <LinearLayout
         android:id="@+id/ll_exerciseView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_below="@+id/tb_actionBar"
+        android:layout_above="@id/rv_exercise_status_container"
         android:visibility="invisible"
         tools:visibility="invisible"
         >
@@ -148,7 +150,14 @@
                     android:textSize="27sp" />
             </LinearLayout>
         </FrameLayout>
-
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_exercise_status_container"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

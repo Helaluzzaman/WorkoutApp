@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:textSize="16sp"
+    android:gravity="center"
+    android:layout_margin="1dp"
+    android:textColor="#222222"
+    android:background="@drawable/exercise_status_background_gray"
+    tools:text="1"
+    android:id="@+id/tv_exercise_id_status"
+    >
+
+</TextView>
