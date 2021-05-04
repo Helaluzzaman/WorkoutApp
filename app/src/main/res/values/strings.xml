@@ -13,4 +13,6 @@
     <string name="congratulations">Congratulations!</string>
     <string name="you_have_finished_the_worktout">You have finished the worktout</string>
     <string name="finish">Finish</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="asking">This will stop your workout. Are you sure you want to quit?</string>
 </resources>

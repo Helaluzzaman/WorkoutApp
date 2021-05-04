@@ -2,7 +2,9 @@ package com.learning.workoutapp
 
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +29,8 @@ import kotlin.collections.ArrayList
 class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var restDownTimer : CountDownTimer? = null
     private var restProgress = 0
+    private val restTimeDuration = 10
+    private val exerciseTimeDuration = 30
 
     private var exerciseDownTimer : CountDownTimer? = null
     private var exerciseProgress = 0
@@ -59,7 +64,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             thisActionBar.setDisplayHomeAsUpEnabled(true)
         }
         actionbar.setNavigationOnClickListener {
-            onBackPressed()
+            showBackAlertDialog()
         }
         tts = TextToSpeech(this, this)
 
@@ -85,11 +90,11 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
     private fun setRestTimer(){
 //        progressBar.progress = restProgress
-        restDownTimer = object : CountDownTimer(11000, 1000){
+        restDownTimer = object : CountDownTimer((restTimeDuration+1).toLong()*1000, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 restProgress++
-                progressText.text = (10- restProgress).toString()
-                progressBar.progress = (10 -restProgress)
+                progressText.text = (restTimeDuration- restProgress).toString()
+                progressBar.progress = (restTimeDuration -restProgress)
             }
             override fun onFinish() {
                 setExerciseView()
@@ -120,7 +125,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
     private fun setExerciseTimer(){
         exerciseProgressBar.progress = exerciseProgress
-        exerciseDownTimer = object : CountDownTimer(31000, 1000){
+        exerciseDownTimer = object : CountDownTimer((exerciseTimeDuration+1).toLong()* 1000, 1000){
             override fun onFinish() {
                 if(currentExercisePosition < exercises!!.size-1 ){
                     setRestTimerView()
@@ -136,8 +141,8 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             override fun onTick(millisUntilFinished: Long) {
                 exerciseProgress++
-                exerciseProgressBar.progress = (30 - exerciseProgress)
-                exerciseProgressText.text = (30- exerciseProgress).toString()
+                exerciseProgressBar.progress = (exerciseTimeDuration - exerciseProgress)
+                exerciseProgressText.text = (exerciseTimeDuration- exerciseProgress).toString()
             }
         }
         exerciseDownTimer!!.start()
@@ -167,12 +172,25 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         tv_exerciseName.text = "$exerciseId. $exerciseName"
         speakOut(exerciseName)
     }
+    fun showBackAlertDialog(){
+        val alertDialog = Dialog(this)
+        alertDialog.setContentView(R.layout.dialog_back_confirmation)
+        alertDialog.findViewById<Button>(R.id.tvYes).setOnClickListener {
+            finish()
+            alertDialog.dismiss()
+        }
+        alertDialog.findViewById<Button>(R.id.tvNo).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
 
     override fun onBackPressed() {
         val snb = Snackbar.make(findViewById(android.R.id.content), "Do you really want to quit?", Snackbar.LENGTH_LONG)
         snb.setAction("Yes") {
             super.onBackPressed()
         }
+        snb.setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent))
         snb.show()
     }
     override fun onDestroy() {

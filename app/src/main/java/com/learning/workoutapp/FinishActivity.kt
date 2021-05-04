@@ -28,7 +28,5 @@ class FinishActivity : AppCompatActivity() {
 
     fun onFinish(view: View) {
         finish()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 }
