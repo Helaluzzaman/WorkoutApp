@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
 
         ll_startButton = findViewById(R.id.ll_start)
         ll_startButton.setOnClickListener {
-//            mainToExerciseIntent()
-            mainToFinishIntent()
+            mainToExerciseIntent()
+//            mainToFinishIntent()
         }
     }
     fun mainToExerciseIntent(){

@@ -9,4 +9,8 @@
     <string name="rest_duration">10</string>
     <string name="exercise_image_">Exercise Image</string>
     <string name="upcoming_exercise_is">Upcoming exercise is</string>
+    <string name="end">END</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_have_finished_the_worktout">You have finished the worktout</string>
+    <string name="finish">Finish</string>
 </resources>

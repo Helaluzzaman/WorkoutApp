@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".FinishActivity">
 
@@ -11,5 +12,46 @@
         android:layout_height="?android:actionBarSize"
         android:id="@+id/tb_actionBar_finish"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/end"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="36sp"
+        />
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/item_circular_border_accent"
+        android:src="@drawable/ic_baseline_done_all_24"
+        android:scaleType="center"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/congratulations"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/you_have_finished_the_worktout"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/finish"
+        android:padding="22dp"
+        android:layout_marginTop="24dp"
+        android:onClick="onFinish"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

@@ -1,7 +1,9 @@
 package com.learning.workoutapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 
 
@@ -22,5 +24,11 @@ class FinishActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun onFinish(view: View) {
+        finish()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }

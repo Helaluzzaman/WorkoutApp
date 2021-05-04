@@ -2,6 +2,7 @@ package com.learning.workoutapp
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -127,9 +128,9 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     exercises!![currentExercisePosition].isCompleted = true
                     rvStatusContainer.adapter!!.notifyDataSetChanged()
                 }else{
-                    Toast.makeText(this@ExcerciseActivity, "Congratulations, you finished" +
-                            "your 7 min workout.", Toast.LENGTH_SHORT).show()
-                    //todo
+                    finish()
+                    val intent = Intent(this@ExcerciseActivity, FinishActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
