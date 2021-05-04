@@ -14,12 +14,17 @@ class MainActivity : AppCompatActivity() {
 
         ll_startButton = findViewById(R.id.ll_start)
         ll_startButton.setOnClickListener {
-            mainToExerciseIntent()
+//            mainToExerciseIntent()
+            mainToFinishIntent()
         }
     }
     fun mainToExerciseIntent(){
         val intent = Intent(this, ExcerciseActivity::class.java)
         startActivity(intent)
     }
-
+    // only for testing
+    fun mainToFinishIntent(){
+        val intent = Intent(this, FinishActivity::class.java)
+        startActivity(intent)
+    }
 }
