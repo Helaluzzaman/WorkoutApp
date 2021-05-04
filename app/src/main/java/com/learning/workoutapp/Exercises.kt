@@ -7,7 +7,8 @@ class Exercises {
             val jumpingJack = ExerciseModel(
                     1,
                     "Jumping Jack",
-                    R.drawable.ic_jumping_jacks
+                    R.drawable.ic_jumping_jacks,
+                    false, false
             )
             exerciseList.add(jumpingJack)
             val wallSit = ExerciseModel(2,

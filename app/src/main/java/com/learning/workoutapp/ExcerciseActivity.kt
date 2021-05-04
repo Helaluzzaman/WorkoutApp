@@ -92,6 +92,8 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
             override fun onFinish() {
                 setExerciseView()
+                exercises!![currentExercisePosition].isSelected = true
+                rvStatusContainer.adapter!!.notifyDataSetChanged()
             }
         }.start()
     }
@@ -119,8 +121,11 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         exerciseProgressBar.progress = exerciseProgress
         exerciseDownTimer = object : CountDownTimer(31000, 1000){
             override fun onFinish() {
-                if(currentExercisePosition < 1 ){        // Todo -> exercises!!.size-1
+                if(currentExercisePosition < exercises!!.size-1 ){
                     setRestTimerView()
+                    exercises!![currentExercisePosition].isSelected = false
+                    exercises!![currentExercisePosition].isCompleted = true
+                    rvStatusContainer.adapter!!.notifyDataSetChanged()
                 }else{
                     Toast.makeText(this@ExcerciseActivity, "Congratulations, you finished" +
                             "your 7 min workout.", Toast.LENGTH_SHORT).show()
