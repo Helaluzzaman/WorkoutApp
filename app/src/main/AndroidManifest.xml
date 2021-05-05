@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".FinishActivity"/>
+        <activity android:name=".BmiActivity"></activity>
+        <activity android:name=".FinishActivity" />
         <activity
             android:name=".ExcerciseActivity"
             android:screenOrientation="portrait" />
