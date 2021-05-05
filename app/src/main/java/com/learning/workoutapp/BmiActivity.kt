@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import kotlin.math.roundToLong
 
@@ -18,6 +20,7 @@ class BmiActivity : AppCompatActivity() {
     lateinit var tv_result: TextView
     lateinit var tv_resultDescription: TextView
     lateinit var b_calculate: Button
+    private var calculateButtonHalfEnable = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,32 +41,41 @@ class BmiActivity : AppCompatActivity() {
         tv_result= findViewById(R.id.tv_bmi_result)
         tv_resultDescription = findViewById(R.id.tv_bmi_result_description)
         b_calculate = findViewById(R.id.b_calculate_bmi)
-
         b_calculate.setOnClickListener {
-            DisplayBmiResult(calculateBmi())
+            val bmi = calculateBmi()
+            if(bmi > 0 ){
+                DisplayBmiResult(calculateBmi())
+            }
         }
-
     }
 
     fun DisplayBmiResult(bmi: Float){
         val bmiLabel:String
         val bmiDescription: String
-//        if(bmi < 16f){
-//            bmiLabel = "Severe Thinness"
-//        }else if( bmi < 17){
-//            bmiLabel = "Modarate Thinness"
-//        }else if(bmi < 18.5){
-//            bmiLabel = "Mild Thinness"
-//        }
         when{
             bmi < 16 ->{
-                bmiLabel = "Severe Thinness"
+                bmiLabel = "Very severely underweight"
             }
             bmi < 17 -> {
-                bmiLabel = "Modarate Thinness"
+                bmiLabel = "Severely underweight"
             }
-            bmi < 18 -> {
-                bmiLabel = "Mild Thinness"
+            bmi < 18.5 -> {
+                bmiLabel = "Underweight"
+            }
+            bmi < 25 -> {
+                bmiLabel = "Normal"
+            }
+            bmi < 30 -> {
+                bmiLabel = "Overweight"
+            }
+            bmi < 35 ->{
+                bmiLabel = "Obese Class I"
+            }
+            bmi < 40 -> {
+                bmiLabel  = "Obese Class II"
+            }
+            bmi >= 40 -> {
+                bmiLabel = "Obese Class III"
             }
             else -> {
                 bmiLabel = "unknown"
@@ -78,16 +90,20 @@ class BmiActivity : AppCompatActivity() {
         tv_resultDescription.text = bmiLabel
     }
 
-    fun calculateBmi(): Float{
-        val weighttext = tl_weight.editText
-        val heithText = tl_height.editText
-        if(weighttext !=null && heithText!=null){
-            val weightkg = weighttext.text.toString().toFloat()
-            val heightm = heithText.text.toString().toFloat()/100
-            val bmi = weightkg/(heightm*heightm)
-            return bmi
+    fun calculateBmi(): Float {
+        val et_weight = tl_weight.editText
+        val et_heith = tl_height.editText
+        if (et_weight != null && et_heith != null) {
+            if (et_heith.text.isNotEmpty() && et_weight.text.isNotEmpty()) {
+                val weightkg = et_weight.text.toString().toFloat()
+                val heightm = et_heith.text.toString().toFloat() / 100
+                val bmi = weightkg / (heightm * heightm)
+                return bmi
+            } else {
+                Toast.makeText(this, "Please Enter input First!", Toast.LENGTH_SHORT).show()
+            }
         }
-        return 0f
+        return -1f
     }
 
     class BMI(
