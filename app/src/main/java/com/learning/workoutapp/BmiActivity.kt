@@ -97,7 +97,7 @@ class BmiActivity : AppCompatActivity() {
                         ll_usInput.visibility = View.GONE
                         ll_metricInput.isVisible = true
                         currentView = METRIC_VIEW
-                        llResult.isVisible = false
+                        llResult.visibility = View.INVISIBLE
                     }
                 }
                 R.id.rb_us -> if(checked){
@@ -106,7 +106,7 @@ class BmiActivity : AppCompatActivity() {
                         ll_metricInput.visibility = View.GONE
                         ll_usInput.isVisible = true
                         currentView = US_VIEW
-                        llResult.isVisible = false
+                        llResult.visibility = View.INVISIBLE
                     }
                 }
             }
