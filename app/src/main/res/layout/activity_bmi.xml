@@ -11,12 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/radio_group_background_gray"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/rb_metric"
+            android:text="@string/metric"
+            android:checked="true"
+            style="@style/radio_style" />
+        <RadioButton
+            android:id="@+id/rb_us"
+            android:text="@string/us"
+            android:checked="false"
+            style="@style/radio_style" />
+
+
+
+
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="8dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:id="@+id/ll_input_metric"
         >
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_weight_kg"
@@ -24,7 +48,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/weight_hint"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +67,77 @@
                 android:inputType="numberDecimal"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:id="@+id/ll_input_us"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/weight_in_paund"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_weight_pd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/height_feet"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_height_ft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="@string/height_in_inch"
+                android:layout_marginStart="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_height_inch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:id="@+id/ll_resultbmi">
         <TextView
             android:id="@+id/tv_yourBmi"
             android:layout_marginTop="16dp"
@@ -56,7 +149,7 @@
             tools:visibility="visible"
             />
         <TextView
-            android:id="@+id/tv_bmi_result"
+            android:id="@+id/tv_bmi_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -64,12 +157,20 @@
             android:textColor="@color/black"
             />
         <TextView
+            android:id="@+id/tv_bmi_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Normal"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:minLines="2"
+            />
+        <TextView
             android:id="@+id/tv_bmi_result_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             tools:text="Normal"
-
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:minLines="2"
             />
@@ -82,6 +183,7 @@
             android:textColor="@color/white"
             />
     </LinearLayout>
+
 
 
 
