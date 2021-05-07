@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 class MainActivity : AppCompatActivity() {
     lateinit var ll_startButton : LinearLayout
     lateinit var cv_bmi: CardView
+    lateinit var cv_history: CardView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         cv_bmi.setOnClickListener {
             mainToBmiIntent()
         }
+        cv_history = findViewById(R.id.cv_history)
+        cv_history.setOnClickListener {
+            mainToHistoryIntent()
+        }
     }
 
     private fun mainToBmiIntent() {
@@ -31,6 +36,10 @@ class MainActivity : AppCompatActivity() {
 
     fun mainToExerciseIntent(){
         val intent = Intent(this, ExcerciseActivity::class.java)
+        startActivity(intent)
+    }
+    fun mainToHistoryIntent(){
+        val intent = Intent(this, HistoryActivity::class.java)
         startActivity(intent)
     }
 }

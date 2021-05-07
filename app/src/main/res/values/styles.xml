@@ -8,9 +8,12 @@
         <item name="android:layout_height">@dimen/cardViewHight1</item>
     </style>
 
+
     <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         ...
         <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccentDeep</item>
+        <item name="android:navigationBarColor">@color/colorAccentDeep</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
@@ -25,7 +28,7 @@
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">cut</item>
+        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">4dp</item>
     </style>
 
