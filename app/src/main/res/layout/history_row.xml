@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        >
+        <TextView
+            android:id="@+id/tv_history_serial"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            tools:text="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            />
+        <TextView
+            android:id="@+id/tv_history_date"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            tools:text="2020 APR 3 32:23 PM bdt"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        />
+
+</LinearLayout>

@@ -29,8 +29,8 @@ import kotlin.collections.ArrayList
 class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var restDownTimer : CountDownTimer? = null
     private var restProgress = 0
-    private val restTimeDuration = 10
-    private val exerciseTimeDuration = 30
+    private val restTimeDuration = 1
+    private val exerciseTimeDuration = 1
 
     private var exerciseDownTimer : CountDownTimer? = null
     private var exerciseProgress = 0
@@ -210,12 +210,11 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         super.onDestroy()
     }
-
     override fun onInit(status: Int) {
         if(status == TextToSpeech.SUCCESS){
             val result= tts!!.setLanguage(Locale.US)
             if(result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA){
-                Log.e("tts", "Language does not support" )
+                Log.e("tts", "Language does not support")
             }
         }else{
             Log.e("tts", "tts initialization failed")
